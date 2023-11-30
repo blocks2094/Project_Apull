@@ -23,13 +23,13 @@ public class PlayerAttack : MonoBehaviour
     {
        
         // UpArrow 키를 누르면 왼쪽 방향으로 회전
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.H))
         {
             RotateAroundPlayer(1f);
         }
 
         // DownArrow 키를 누르면 오른쪽 방향으로 회전
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.K))
         {
             RotateAroundPlayer(-1f);
         }
@@ -63,8 +63,6 @@ public class PlayerAttack : MonoBehaviour
         // 일정 시간이 지난 후에 Bullet을 삭제
         Destroy(bullet, bulletLifetime);
 
-       
     }
 
-   
 }
