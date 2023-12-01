@@ -65,6 +65,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"PhotonNetwork.InRoom = {PhotonNetwork.InRoom}");
         Debug.Log($"Player Count = {PhotonNetwork.CurrentRoom.PlayerCount}");
+        foreach (var player in PhotonNetwork.CurrentRoom.Players)
+        {
+            Debug.Log($"{player.Value.NickName} , {player.Value.ActorNumber}");
+        }
+
     }
 
 }
