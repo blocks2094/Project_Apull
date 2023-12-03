@@ -78,7 +78,7 @@ public class Playermove : MonoBehaviour, IPunObservable
 
 
         // 입력에 따라 이동 벡터 계산
-        Vector3 movement = new Vector3(0f, h, h);
+        Vector3 movement = new Vector3(0f, h, 0f);
         transform.Translate(movement * moveSpeed * Time.deltaTime);
 
         // 메인 카메라를 플레이어 센터로 따라가게 함
