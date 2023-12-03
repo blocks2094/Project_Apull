@@ -6,8 +6,6 @@ public class Booom : MonoBehaviour
 {
     public GameObject explosionAreaGO;
 
-
-
     void Start()
     {
         explosionAreaGO.SetActive(false);

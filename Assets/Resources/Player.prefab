@@ -303,6 +303,7 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletLifetime: 3
   damping: 10
+  shootCooldown: 5
 --- !u!58 &1258732124613935671
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -50,7 +50,6 @@ public class Ground : MonoBehaviour
                 newTexture.SetPixel(nx, ny, Color.clear);
             }
         }
-
         newTexture.Apply();
         MakeSprite();
 
@@ -63,20 +62,6 @@ public class Ground : MonoBehaviour
         if (!collision.GetComponent<CircleCollider2D>()) return;
 
         MakeAHole(collision.GetComponent<CircleCollider2D>());
-    }
-
-    public void MakeDot(Vector3 pos)
-    {
-        Vector2Int pixelPosition = WorldToPixel(pos);
-
-        newTexture.SetPixel(pixelPosition.x, pixelPosition.y, Color.clear);
-        newTexture.SetPixel(pixelPosition.x + 1, pixelPosition.y, Color.clear);
-        newTexture.SetPixel(pixelPosition.x - 1, pixelPosition.y, Color.clear);
-        newTexture.SetPixel(pixelPosition.x, pixelPosition.y + 1, Color.clear);
-        newTexture.SetPixel(pixelPosition.x, pixelPosition.y - 1, Color.clear);
-
-        newTexture.Apply();
-        MakeSprite();
     }
 
     void MakeSprite()

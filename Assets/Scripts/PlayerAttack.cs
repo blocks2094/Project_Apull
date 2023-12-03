@@ -1,38 +1,33 @@
 using Cinemachine;
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-using Cinemachine;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public Transform player; // 플레이어의 Transform 컴포넌트를 연결하세요.
-    public Transform pivot;  // Bullet을 생성할 Pivot point의 Transform 컴포넌트를 연결하세요.
-    public GameObject bulletPrefab; // 생성할 Bullet의 프리팹을 연결하세요.
-    public float rotationSpeed = 5.0f; // 회전 속도 조절을 위한 변수
-    public float bulletSpeed = 10.0f;  // Bullet의 발사 속도
-    public float bulletLifetime = 3.0f; // Bullet의 생존 시간
+    public Transform player;
+    public Transform pivot;
+    public GameObject bulletPrefab;
+    public float rotationSpeed = 5.0f;
+    public float bulletSpeed = 10.0f;
+    public float bulletLifetime = 3.0f;
 
-    // PhotonView 컴포넌트 캐시처리를 위한 변수
     private PhotonView pv;
-    // 시네머신 가상 카메라를 저장할 변수
     private CinemachineVirtualCamera virtualCamera;
 
-    // 수신된 위치와 회전값을 저장할 변수
     private Vector3 receivePos;
     private Quaternion receiveRot;
-    // 수신된 좌표로 이동 및 회전 속도의 민감도
     public float damping = 10.0f;
+
+    // 발사 쿨타임 변수
+    private bool canShoot = true;
+    public float shootCooldown = 5.0f;
 
     void Start()
     {
         pv = GetComponent<PhotonView>();
         virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
 
-        //PhotonView가 자신의 것일 경우 시네머신 가상카메라를 연결
         if (pv.IsMine)
         {
             virtualCamera.Follow = transform;
@@ -40,27 +35,21 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            // 수신된 좌표로 보간한 이동처리
             transform.position = Vector3.Lerp(transform.position, receivePos, Time.deltaTime * damping);
-            // 수신된 회전값으로 보간한 회전처리
             transform.rotation = Quaternion.Slerp(transform.rotation, receiveRot, Time.deltaTime * damping);
         }
     }
 
     void Update()
     {
-        // 자신이 생성한 네트워크 객체만 컨트롤
         if (pv.IsMine)
         {
             Attack();
         }
-
-        
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        // 자신의 로컬 캐릭터인 경우 자신의 데이터를 다른 네트워크 유저에게 송신
         if (stream.IsWriting)
         {
             stream.SendNext(transform.position);
@@ -75,31 +64,24 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        // UpArrow 키를 누르면 왼쪽 방향으로 회전
         if (Input.GetKey(KeyCode.H))
         {
             RotateAroundPlayer(1f);
         }
 
-        // DownArrow 키를 누르면 오른쪽 방향으로 회전
         if (Input.GetKey(KeyCode.K))
         {
             RotateAroundPlayer(-1f);
         }
 
-        // Space 키를 누르면 Bullet을 생성하고 발사
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && canShoot)
         {
-            ShootBullet();
+            pv.RPC("ShootBullet", RpcTarget.All);
+            StartCoroutine(ShootCooldown());
         }
     }
 
-    void RotateAroundPlayer(float direction)
-    {
-        // 플레이어 주위를 회전
-        transform.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
-    }
-
+    [PunRPC]
     void ShootBullet()
     {
         // Bullet을 생성하고 발사
@@ -115,7 +97,18 @@ public class PlayerAttack : MonoBehaviour
 
         // 일정 시간이 지난 후에 Bullet을 삭제
         Destroy(bullet, bulletLifetime);
-
     }
 
+    void RotateAroundPlayer(float direction)
+    {
+        transform.Rotate(Vector3.forward, direction * rotationSpeed * Time.deltaTime);
+    }
+
+    // 발사 쿨타임을 처리하는 코루틴
+    IEnumerator ShootCooldown()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(shootCooldown);
+        canShoot = true;
+    }
 }
