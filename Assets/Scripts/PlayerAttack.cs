@@ -1,6 +1,11 @@
+using Cinemachine;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using Cinemachine;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -11,17 +16,38 @@ public class PlayerAttack : MonoBehaviour
     public float bulletSpeed = 10.0f;  // Bullet의 발사 속도
     public float bulletLifetime = 3.0f; // Bullet의 생존 시간
 
-   
+    // PhotonView 컴포넌트 캐시처리를 위한 변수
+    private PhotonView pv;
+    // 시네머신 가상 카메라를 저장할 변수
+    private CinemachineVirtualCamera virtualCamera;
 
-   
+
     void Start()
     {
-       
+        pv = GetComponent<PhotonView>();
+        virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
+
+        //PhotonView가 자신의 것일 경우 시네머신 가상카메라를 연결
+        if (pv.IsMine)
+        {
+            virtualCamera.Follow = transform;
+            virtualCamera.LookAt = transform;
+        }
     }
 
     void Update()
     {
-       
+        // 자신이 생성한 네트워크 객체만 컨트롤
+        if (pv.IsMine)
+        {
+            Attack();
+        }
+
+        
+    }
+
+    void Attack()
+    {
         // UpArrow 키를 누르면 왼쪽 방향으로 회전
         if (Input.GetKey(KeyCode.H))
         {
