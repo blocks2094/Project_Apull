@@ -112,7 +112,7 @@ public class Playermove : MonoBehaviourPunCallbacks, IPunObservable
         if (collision.gameObject.tag == "Death")
         {
             // 충돌한 플레이어 게임 오브젝트를 삭제
-            Destroy(gameObject);
+            Destroy(gameObject, 2f);
         }
     }
 }
