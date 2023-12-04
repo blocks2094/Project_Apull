@@ -6,6 +6,7 @@ public class Booom : MonoBehaviour
 {
     public GameObject explosionAreaGO;
 
+    public SoundManager soundManager;
     void Start()
     {
         explosionAreaGO.SetActive(false);
@@ -15,7 +16,7 @@ public class Booom : MonoBehaviour
     {
         if (!collision.transform.CompareTag("Ground") ||
             collision.transform.CompareTag("Player")) return;
-
+        soundManager.PlaySound(0);
         explosionAreaGO.SetActive(true);
         Destroy(this.gameObject, 0.2f);
     }

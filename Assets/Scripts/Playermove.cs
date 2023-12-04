@@ -24,6 +24,8 @@ public class Playermove : MonoBehaviourPunCallbacks, IPunObservable
     // 수신된 좌표로 이동 및 회전 속도의 민감도
     public float damping = 10.0f;
 
+    public SoundManager soundManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -86,6 +88,7 @@ public class Playermove : MonoBehaviourPunCallbacks, IPunObservable
 
         if (Input.GetKeyDown(KeyCode.J) && !isJumping)
         {
+            soundManager.PlaySound(0);
             Jump();
         }
     }

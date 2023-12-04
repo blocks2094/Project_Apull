@@ -23,6 +23,7 @@ public class PlayerAttack : MonoBehaviourPunCallbacks, IPunObservable
     private bool canShoot = true;
     public float shootCooldown = 5.0f;
 
+    public SoundManager soundManager;
     void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -84,6 +85,8 @@ public class PlayerAttack : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void ShootBullet()
     {
+        soundManager.PlaySound(0);  // Bullet 발사 사운드
+
         // Bullet을 생성하고 발사
         GameObject bullet = Instantiate(bulletPrefab, pivot.position, Quaternion.identity);
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
