@@ -78,7 +78,7 @@ public class Playermove : MonoBehaviour, IPunObservable
 
 
         // 입력에 따라 이동 벡터 계산
-        Vector3 movement = new Vector3(0f, h, h);
+        Vector3 movement = new Vector3(0f, h, 0f);
         transform.Translate(movement * moveSpeed * Time.deltaTime);
 
         // 메인 카메라를 플레이어 센터로 따라가게 함
@@ -101,5 +101,15 @@ public class Playermove : MonoBehaviour, IPunObservable
     {
         yield return new WaitForSeconds(1.5f);
         isJumping = false;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 충돌한 객체의 태그가 "Player"인 경우
+        if (collision.gameObject.tag == "Death")
+        {
+            // 충돌한 플레이어 게임 오브젝트를 삭제
+            Destroy(gameObject);
+        }
     }
 }

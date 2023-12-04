@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8926295388531366916}
   - component: {fileID: 4458001014768470314}
   - component: {fileID: 8034564356715652106}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpPower: 5
+  jumpPower: 6
   damping: 10
 --- !u!70 &8926295388531366916
 CapsuleCollider2D:
@@ -118,7 +118,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 2.2}
   m_Direction: 0
 --- !u!50 &4458001014768470314
 Rigidbody2D:
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5484086102668732679}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 1258732124613935671}
   - component: {fileID: 7870259047337598925}
   - component: {fileID: 5630064231288012193}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,6 +339,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 9037933832356227905}
   - {fileID: 5630064231288012193}
   sceneViewId: 0
   InstantiationId: 0
@@ -369,7 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1919046295728293417}
   - component: {fileID: 8892785361164277259}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,9 +454,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7562990627181276388}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
