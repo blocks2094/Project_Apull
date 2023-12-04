@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Cinemachine;
 
-public class Playermove : MonoBehaviour, IPunObservable
+public class Playermove : MonoBehaviourPunCallbacks, IPunObservable
 {
     public float moveSpeed = 5.0f; // 플레이어 이동 속도
     public float jumpPower = 2.0f;

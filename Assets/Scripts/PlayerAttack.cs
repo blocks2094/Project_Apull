@@ -76,7 +76,7 @@ public class PlayerAttack : MonoBehaviourPunCallbacks, IPunObservable
 
         if (Input.GetKeyDown(KeyCode.Space) && canShoot)
         {
-            pv.RPC("ShootBullet", RpcTarget.All);
+            pv.RPC("ShootBullet", RpcTarget.AllBuffered);
             StartCoroutine(ShootCooldown());
         }
     }

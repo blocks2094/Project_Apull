@@ -29,9 +29,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 게임 버전 설정
         PhotonNetwork.GameVersion = version;
         // 접속 유저의 닉네임 설정
-        // PhotonNetwork.NickName = userId;
+        //hotonNetwork.NickName = userId;
         // 포톤 서버와의 데이터의 초당 전송 횟수
         Debug.Log(PhotonNetwork.SendRate);
+
         // RoomItem 프리팹 로드
         roomItemPrefab = Resources.Load<GameObject>("RoomItem");
         // 포톤 서버 접속
@@ -111,7 +112,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 마스터 클라이언트인 경우에 룸에 입장한 후 전투 씬을 로딩한다.
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("BattleField");
+            PhotonNetwork.LoadLevel("SampleScene");
         }
     }
 
