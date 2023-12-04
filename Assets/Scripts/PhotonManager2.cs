@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
+using TMPro;
 public class PhotonManager2 : MonoBehaviourPunCallbacks
 {
     // 게임의 버전
     private readonly string version = "1.0";
     // 유저의 닉네임
     private string userId = "Zack";
+
+    public Button exitBtn;
+
     void Awake()
     {
         // 마스터 클라이언트의 씬 자동 동기화 옵션
@@ -20,6 +26,8 @@ public class PhotonManager2 : MonoBehaviourPunCallbacks
         // 포톤 서버와의 데이터의 초당 전송 횟수
         Debug.Log(PhotonNetwork.SendRate);
         PhotonNetwork.ConnectUsingSettings();
+
+        exitBtn.onClick.AddListener(() => OnExitClick());
     }
 
     // 포톤 서버에 접속 후 호출되는 콜백 함수
@@ -69,5 +77,16 @@ public class PhotonManager2 : MonoBehaviourPunCallbacks
         int idx = Random.Range(1, points.Length);
         // 네트워크상에 캐릭터 생성
         PhotonNetwork.Instantiate("Player", points[idx].position, points[idx].rotation, 0);
+    }
+
+    // Exit 버튼의 OnClick에 연결할 함수
+    private void OnExitClick()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+    // 포톤 룸에서 퇴장했을 때 호출되는 콜백함수
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 }
